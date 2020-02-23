@@ -1,0 +1,9 @@
+[
+  {"goal": "(ONT::STEAL ?x:ONT::PERSON ?z:FACILITY)",
+   "acts": [
+    "(ONT::MOTION  ?x::PERSON ?Z::FACILITY)",
+    "(ONT::BODY-MANIPULATION ?x::PERSON ?Y::WEAPON)",
+    "(ONT::DIRECTIVE ?x::PERSON ?X:MONEY)",
+    "(ONT::DEPART ?x::PERSON ?z::FACILITY)"]
+  }
+]
