@@ -40,7 +40,6 @@ def test_recognize_intent():
   out_raw = read_file(output_dir + 'intents_test.txt') + read_file(output_dir + 'intents_custom.txt')
   ans_test = [recognize_intent(x) for x in in_raw]
   ans_gold = out_raw
-  print(ans_gold)
   print('\n\nTesting function \'recognize_intent\':')
   run_tests(in_raw, ans_test, ans_gold)
 
