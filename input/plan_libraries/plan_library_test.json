@@ -1,7 +1,7 @@
 [
   {"goal": "(ONT::STEAL ?x:ONT::PERSON ?z:ONT::FACILITY)",
    "acts": [
-    "(ONT::MOTION  ?x:ONT::PERSON ?z:ONT::FACILITY)",
+    "(ONT::MOTION ?x:ONT::PERSON ?z:ONT::FACILITY)",
     "(ONT::BODY-MANIPULATION ?x:ONT::PERSON ?y:ONT::WEAPON)",
     "(ONT::DIRECTIVE ?x:ONT::PERSON ?w:ONT::MONEY)",
     "(ONT::DEPART ?x:ONT::PERSON ?z:ONT::FACILITY)"]
