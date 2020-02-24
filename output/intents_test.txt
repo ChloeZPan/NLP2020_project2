@@ -1,1 +1,4 @@
 (ONT::STEAL partner store)
+(ONT::STEAL friend theater), (ONT::EVENT-OF-EXPERIENCE friend ?y:ONT::COMPOSITION)
+(ONT::STEAL mama restaurant), (ONT::BECOME mama ?w:ONT::PROFESSIONAL)
+(ONT::BECOME mama boss)
