@@ -51,7 +51,7 @@ Given `(travel partner store)`, once you bind the varialbes in `(ONT::BODY-MANIP
 
 2. Word sense disambiguation in context
 
-Note that some words are ambiguous as in they can have multiple meanings. For example, the word `travel` can be mapped to two different TRIPS ontology types: `ONT::AFFILIATE` and `ONT::FAMILY-RELATION`. This means `(travel partner store)` can match either `(ONT::MOVE  ?x::PERSON ?Z::FACILITY)` or `(ONT::MOVE  ?x::AFFILIATE ?Z::FACILITY)`.
+Note that some words are ambiguous as in they can have multiple meanings. For example, the word `travel` can map to two different TRIPS ontology types: `ONT::AFFILIATE` and `ONT::FAMILY-RELATION`. This means `(travel partner store)` can match either `(ONT::MOVE ?x::PERSON ?Z::FACILITY)` or `(ONT::MOVE ?x::AFFILIATE ?Z::FACILITY)`.
 
 
 3. Intention recognition with minimal covering explanation
@@ -72,3 +72,7 @@ in `demo.ipynb`.
 Submit a `[yourname].zip` file on Blackboard. Make sure that you've implemented the skeleton code in the`code.py` file.
 
 Please include a `README.{txt|pdf}` file in your submission. This file should contain your **name**, **student ID**, and **email** in a header. Give a short outline of your implementation of the algorithms, and any additional commentary you feel is necessary (any specific running instructions, known issues/bugs your code has, etc.)
+
+## Acknowledgement
+
+Thanks to Rik Bose for providing us with PyTrips demo. 
