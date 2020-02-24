@@ -1,4 +1,4 @@
 (travel partner store)
 (travel friend airport)
 (run mama restaurant)
-(run mama restaurant), (work mama restaurant)
+(run mama restaurant), (work mama boss)
