@@ -18,6 +18,6 @@
    "acts": [
      "(ONT::MANAGING ?x:ONT::PERSON ?y:ONT::COMMERCIAL-FACILITY)",
      "(ONT::MEET ?x:ONT::PERSON ?z:ONT::PERSON)",
-     "(ONT::WORK ?x:ONT::PERSON ?y:ONT::COMMERCIAL-FACILITY)"]
+     "(ONT::WORK ?x:ONT::PERSON ?w:ONT::PROFESSIONAL)"]
   }
 ]
