@@ -113,6 +113,8 @@ Provide **three** of your own examples (expanding the plan library as necessary 
 
 Create any new plans in `input/plan_libraries/plan_library_custom.json`, and write your three example inputs in `input/observations_custom.txt`, and the expected outputs in `output/intents_custom.txt`. Make sure the format is the same as in the examples that are given to you.
 
+NOTE: the [Trips web interface](https://www.cs.rochester.edu/research/trips/lexicon/browse-ont-lex-ajax.html) might be useful for creating the examples.
+
 ## Submission
 
 Submit a `[yourname].zip` file on Blackboard. Make sure that you've implemented the skeleton code in the `code.py` file, and have included your custom plans and 3 example inputs/outputs in the `input/plan_libraries/plan_library_custom.json`, `input/observations_custom.txt`, and `output/intents_custom.txt` files, respectively.
