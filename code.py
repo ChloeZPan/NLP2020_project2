@@ -12,14 +12,15 @@ Feel free to write any additional functions you need in this file, but DO NOT cr
 
 def recognize_intent(observations):
   """Takes observations as input: this is a list of tuples of the form (word1, word2, word3), where each
-     tuple represents an observation. Return a set of possible goals, e.g.
-     {(ONT::STEAL partner store), (ONT::TARGET_PRACTICE person gun)}"""
+     tuple represents an observation (listed in order of occurence). Return a list/set of possible goals, e.g.
+     [(ONT::STEAL partner store), (ONT::TARGET_PRACTICE person gun)]"""
   
   plan_library = read_plan_library() # Read plan library from files in input/plan_libraries
-  print(plan_library)
 
   # TODO: IMPLEMENT FUNCTION HERE
-  pass
+  return {None}
+
+
 
 
 def parse_tuple_string(str):
@@ -30,6 +31,7 @@ def parse_tuple_string(str):
 
 def read_plan_library():
   """Reads in plan library from plan library files."""
+  # Define file paths to load from
   plan_library_test = 'input/plan_libraries/plan_library_test.json'
   plan_library_custom = 'input/plan_libraries/plan_library_custom.json'
   plan_library = []

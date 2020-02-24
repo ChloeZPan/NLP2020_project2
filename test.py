@@ -22,6 +22,8 @@ def run_tests(inputs, ans_test, ans_gold):
   n = 0
   m = 1
   for (i, t, g) in zip(inputs, ans_test, ans_gold):
+    t = set(t)
+    g = set(g)
     if t == g:
       s = 'SUCCESS'
       n = n+1
@@ -38,10 +40,9 @@ def test_recognize_intent():
   out_raw = read_file(output_dir + 'intents_test.txt') + read_file(output_dir + 'intents_custom.txt')
   ans_test = [recognize_intent(x) for x in in_raw]
   ans_gold = out_raw
-  print(ans_test)
   print(ans_gold)
-  # print('\n\nTesting function \'check_subsumption\':')
-  # run_tests(in_raw, ans_test, ans_gold)
+  print('\n\nTesting function \'recognize_intent\':')
+  run_tests(in_raw, ans_test, ans_gold)
 
 
 def main():
