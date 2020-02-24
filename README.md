@@ -46,7 +46,7 @@ Your code should be able to do the following tasks.
 
 1. Variable binding
 
-Given `(travel partner store)`, once you bind the varialbes in `(ONT::BODY-MANIPULATION partner ?Y::WEAPON)` and instantiate `(ONT::BODY-MANIPULATION partner ?Y::WEAPON)`, you cannot match this instantiated action with `(grasp person gun)` since `person` is not equal to `patner`.
+Given `(travel partner store)`, once you bind the varialbes in `(ONT::BODY-MANIPULATION partner ?Y::WEAPON)` and instantiate `(ONT::BODY-MANIPULATION partner ?Y::WEAPON)`, you cannot match this instantiated action with `(grasp person gun)` since `person` is not equal to `partner`.
 
 
 2. Word sense disambiguation in context
