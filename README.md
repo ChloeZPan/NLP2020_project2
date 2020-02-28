@@ -115,6 +115,30 @@ Create any new plans in `input/plan_libraries/plan_library_custom.json`, and wri
 
 NOTE: the [Trips web interface](https://www.cs.rochester.edu/research/trips/lexicon/browse-ont-lex-ajax.html) might be useful for creating the examples.
 
+## Implementation Details
+
+To implement the function `recognize_intent`, please follow the details below.
+
+- the output structure of recognize_intent() is always one nested list
+- each inner list represents a set of goal(s)
+- the outer list represents all possible set(s) of goal(s)
+- comma inside an inner list indicates an intersection
+- comma outside an inner list indicates a disjunction
+
+For example, if your best conclusion is `(ONT::STEAL partner store)`, then your function should return 
+```
+[[('ONT::STEAL', 'partner', 'store')]]
+```
+
+If your best conclusion is `(ONT::STEAL friend airport),(ONT::DEPART friend ?y:ONT::COUNTRY)`, meainng `(ONT::STEAL friend airport) v (ONT::DEPART friend ?y:ONT::COUNTRY)`, then your function should return
+```
+[[('ONT::STEAL', 'friend', 'airport')], [('ONT::DEPART', 'friend', '?y:ONT::COUNTRY')]]
+```
+
+IF your best conclusion is `((ONT::STEAL person airport) (ONT::BECOME person ?w:ONT::PROFESSIONAL)), ((ONT::DEPART person ?y:ONT::COUNTRY) (ONT::BECOME person ?w:ONT::PROFESSIONAL))`, equivalent to `((ONT::STEAL person airport) & (ONT::BECOME person ?w:ONT::PROFESSIONAL)) v ((ONT::DEPART person ?y:ONT::COUNTRY) & (ONT::BECOME person ?w:ONT::PROFESSIONAL))` then your function should return
+```[[('ONT::STEAL', 'person', 'airport'), ('ONT::BECOME', 'person', '?w:ONT::PROFESSIONAL')], [('ONT::DEPART', 'person', '?y:ONT::COUNTRY'), ('ONT::BECOME', 'person', '?w:ONT::PROFESSIONAL')]]
+```
+
 ## Submission
 
 Submit a `[yourname].zip` file on Blackboard. Make sure that you've implemented the skeleton code in the `code.py` file, and have included your custom plans and 3 example inputs/outputs in the `input/plan_libraries/plan_library_custom.json`, `input/observations_custom.txt`, and `output/intents_custom.txt` files, respectively.

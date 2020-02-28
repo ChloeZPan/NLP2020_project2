@@ -4,16 +4,27 @@ It should run with the following command `python3 test.py` from the *root direct
 """
 
 import csv
+import re
 from code import *
 
 input_dir = 'input/'
 output_dir = 'output/'
 
+
 def read_file(filename):
-  """Read the csv file at the given path"""
   with open(filename, mode='r') as f:
     csv_reader = csv.reader(f, delimiter=',')
-    test = [list(map(parse_tuple_string, row)) for row in csv_reader]
+    test = []
+    for row in csv_reader:
+      if row:
+        if row[0].strip()[:2] == '((' and row[0].strip()[-2:] == '))':
+          conclusion = []
+          for goal_set in row:
+            goal_set = re.sub('\)\s*\(', '),(', goal_set).strip()[1:-1]
+            conclusion.append(list(map(parse_tuple_string, goal_set.split(","))))
+        else:
+          conclusion = list(map(list, list(map(list_tuple_string, row))))
+        test.append(conclusion)
   return test
 
 
@@ -22,8 +33,6 @@ def run_tests(inputs, ans_test, ans_gold):
   n = 0
   m = 1
   for (i, t, g) in zip(inputs, ans_test, ans_gold):
-    t = set(t)
-    g = set(g)
     if t == g:
       s = 'SUCCESS'
       n = n+1
