@@ -130,14 +130,21 @@ For example, if your best conclusion is `(ONT::STEAL partner store)`, then your 
 [[('ONT::STEAL', 'partner', 'store')]]
 ```
 
-If your best conclusion is `(ONT::STEAL friend airport),(ONT::DEPART friend ?y:ONT::COUNTRY)`, meainng `(ONT::STEAL friend airport) v (ONT::DEPART friend ?y:ONT::COUNTRY)`, then your function should return
+If your best conclusion is `(ONT::STEAL friend airport),(ONT::DEPART friend ?y:ONT::COUNTRY)`,
+meainng `(ONT::STEAL friend airport) v (ONT::DEPART friend ?y:ONT::COUNTRY)`, 
+then your function should return
 ```
 [[('ONT::STEAL', 'friend', 'airport')], [('ONT::DEPART', 'friend', '?y:ONT::COUNTRY')]]
 ```
 
-IF your best conclusion is `((ONT::STEAL person airport) (ONT::BECOME person ?w:ONT::PROFESSIONAL)), ((ONT::DEPART person ?y:ONT::COUNTRY) (ONT::BECOME person ?w:ONT::PROFESSIONAL))`, equivalent to `((ONT::STEAL person airport) & (ONT::BECOME person ?w:ONT::PROFESSIONAL)) v ((ONT::DEPART person ?y:ONT::COUNTRY) & (ONT::BECOME person ?w:ONT::PROFESSIONAL))` then your function should return
+IF your best conclusion is 
+`((ONT::STEAL person airport) (ONT::BECOME person ?w:ONT::PROFESSIONAL)), ((ONT::DEPART person ?y:ONT::COUNTRY) (ONT::BECOME person ?w:ONT::PROFESSIONAL))`, 
+equivalent to 
+`((ONT::STEAL person airport) & (ONT::BECOME person ?w:ONT::PROFESSIONAL)) v ((ONT::DEPART person ?y:ONT::COUNTRY) & (ONT::BECOME person ?w:ONT::PROFESSIONAL))`, 
+then your function should return
 ```
-[[('ONT::STEAL', 'person', 'airport'), ('ONT::BECOME', 'person', '?w:ONT::PROFESSIONAL')], [('ONT::DEPART', 'person', '?y:ONT::COUNTRY'), ('ONT::BECOME', 'person', '?w:ONT::PROFESSIONAL')]]
+[[('ONT::STEAL', 'person', 'airport'), ('ONT::BECOME', 'person', '?w:ONT::PROFESSIONAL')],
+[('ONT::DEPART', 'person', '?y:ONT::COUNTRY'), ('ONT::BECOME', 'person', '?w:ONT::PROFESSIONAL')]]
 ```
 
 ## Submission
