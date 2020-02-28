@@ -136,7 +136,8 @@ If your best conclusion is `(ONT::STEAL friend airport),(ONT::DEPART friend ?y:O
 ```
 
 IF your best conclusion is `((ONT::STEAL person airport) (ONT::BECOME person ?w:ONT::PROFESSIONAL)), ((ONT::DEPART person ?y:ONT::COUNTRY) (ONT::BECOME person ?w:ONT::PROFESSIONAL))`, equivalent to `((ONT::STEAL person airport) & (ONT::BECOME person ?w:ONT::PROFESSIONAL)) v ((ONT::DEPART person ?y:ONT::COUNTRY) & (ONT::BECOME person ?w:ONT::PROFESSIONAL))` then your function should return
-```[[('ONT::STEAL', 'person', 'airport'), ('ONT::BECOME', 'person', '?w:ONT::PROFESSIONAL')], [('ONT::DEPART', 'person', '?y:ONT::COUNTRY'), ('ONT::BECOME', 'person', '?w:ONT::PROFESSIONAL')]]
+```
+[[('ONT::STEAL', 'person', 'airport'), ('ONT::BECOME', 'person', '?w:ONT::PROFESSIONAL')], [('ONT::DEPART', 'person', '?y:ONT::COUNTRY'), ('ONT::BECOME', 'person', '?w:ONT::PROFESSIONAL')]]
 ```
 
 ## Submission
