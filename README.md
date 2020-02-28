@@ -142,7 +142,7 @@ then your function should return
 [('ONT::DEPART', 'person', '?y:ONT::COUNTRY'), ('ONT::BECOME', 'person', '?w:ONT::PROFESSIONAL')]]
 ```
 
-For backwards compatibility before this clarification was released, a single flat list of tuples will be interpreted as a disjunction.
+To maintain backwards compatibility with before this clarification was released, a single flat list of tuples will be interpreted as a disjunction.
 
 #### Testing
 
