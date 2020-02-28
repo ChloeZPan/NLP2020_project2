@@ -106,7 +106,7 @@ Implement the functionality described above in the function `recognize_intent`, 
 To implement the function `recognize_intent`, please follow the details below.
 
 Your function should be finding the *most general* lowest-cost solution. If you have three possible conclusions (where a conclusion is either
-an assumed intent, or a conjunction of assumed intents) which all have the same cost, and this cost is also the lowest cost, your function should return a disjunction of conclusions.
+an assumed intent, or a conjunction of assumed intents) which all have the same cost, and this cost is also the lowest cost, your function should return a disjunction of these three conclusions.
 
 For the return value, please use the following format:
 
