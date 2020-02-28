@@ -11,10 +11,17 @@ input_dir = 'input/'
 output_dir = 'output/'
 
 
-def read_file(filename):
+def read_observations(filename):
   with open(filename, mode='r') as f:
     csv_reader = csv.reader(f, delimiter=',')
-    test = []
+    res = [list(map(parse_tuple_string, row)) for row in csv_reader]
+  return res
+
+
+def read_intents(filename):
+  with open(filename, mode='r') as f:
+    csv_reader = csv.reader(f, delimiter=',')
+    res = []
     for row in csv_reader:
       if row:
         if row[0].strip()[:2] == '((' and row[0].strip()[-2:] == '))':
@@ -24,8 +31,26 @@ def read_file(filename):
             conclusion.append(list(map(parse_tuple_string, goal_set.split(","))))
         else:
           conclusion = list(map(list, list(map(list_tuple_string, row))))
-        test.append(conclusion)
-  return test
+        res.append(conclusion)
+  return res
+
+
+def correct_flat_list(lst):
+  """converts list of the form [a, b, c] to [[a], [b], [c]]"""
+  if not any(isinstance(l, list) for l in lst):
+    return [[l] for l in lst]
+  else:
+    return lst
+
+
+def lower_all(lst):
+  """Converts all items in a nested list to lowercase"""
+  if isinstance(lst, list):
+    return list(map(lower_all, lst))
+  if isinstance(lst, tuple):
+    return tuple(map(lower_all, lst))
+  else:
+    return lst.lower()
 
 
 def run_tests(inputs, ans_test, ans_gold):
@@ -45,9 +70,9 @@ def run_tests(inputs, ans_test, ans_gold):
 
 def test_recognize_intent():
   """Test 'recognize_intent' function"""
-  in_raw = read_file(input_dir + 'observations_test.txt') + read_file(input_dir + 'observations_custom.txt')
-  out_raw = read_file(output_dir + 'intents_test.txt') + read_file(output_dir + 'intents_custom.txt')
-  ans_test = [recognize_intent(x) for x in in_raw]
+  in_raw = read_observations(input_dir + 'observations_test.txt') + read_observations(input_dir + 'observations_custom.txt')
+  out_raw = read_intents(output_dir + 'intents_test.txt') + read_intents(output_dir + 'intents_custom.txt')
+  ans_test = lower_all(correct_flat_list([recognize_intent(x) for x in in_raw]))
   ans_gold = out_raw
   print('\n\nTesting function \'recognize_intent\':')
   run_tests(in_raw, ans_test, ans_gold)

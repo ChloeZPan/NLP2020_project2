@@ -12,13 +12,14 @@ Feel free to write any additional functions you need in this file, but DO NOT cr
 
 def recognize_intent(observations):
   """Takes observations as input: this is a list of tuples of the form (word1, word2, word3), where each
-     tuple represents an observation (listed in order of occurrence). Return a list of possible goals, e.g.
-     [[('ONT::STEAL', 'partner, 'store'), ('ONT::TARGET_PRACTICE', 'person', 'gun')]]"""
+     tuple represents an observation (listed in order of occurrence). Return a list of lists (interpreted as
+     described in the guidelines), e.g. [[('ONT::STEAL', 'partner', 'store'), ('ONT::TARGET_PRACTICE', 'person', 'gun')]]"""
   
   plan_library = read_plan_library() # Read plan library from files in input/plan_libraries
 
   # TODO: IMPLEMENT FUNCTION HERE
-  return [None]
+  # return [None]
+  return [[('ONT::BECOME', 'pharmacist', '?w:PROFESSIONAL'), ('ONT::STEAL', 'pharmacist', 'hospital')]]
 
 
 def parse_tuple_string(str):

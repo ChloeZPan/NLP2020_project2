@@ -2,7 +2,7 @@
 
 ## Description
 
-Based on the weighted abductive reasoning we learned in lecture, the goal of this project is to write a program that can match a sequence of given observations to plans, and output a set of goals/intents corresponding to those plans. 
+Based on the weighted abductive reasoning we learned in lecture, the goal of this project is to write a program that can match a sequence of given observations to plans, and output a list of goals/intents corresponding to those plans. 
 
 Specifically, you're given:
 
@@ -10,7 +10,7 @@ Specifically, you're given:
 
 2) a plan library with a list of plans. Each plan consists of sequences of actions associated with a goal - both the actions and the goal are triples. The first element of a triple is always a TRIPS ontology type, and the rest of the elements are variables followed by ontology type restrictors.
 
-When you match an observation to an action, you should replace the variable with the *word* it was matched to, everywhere in the plan that variable occurs. For each list of observations, your code should output a set of the goals/intents which explain the observations with the *lowest cost* (particularized with the words that were matched) after all observations have been seen. For weighted abduction, assume that the cost of assuming each goal is 1 (i.e. all are equally likely).
+When you match an observation to an action, you should replace the variable with the *word* it was matched to, everywhere in the plan that variable occurs. For each list of observations, your code should output a list of the goals/intents which explain the observations with the *lowest cost* (particularized with the words that were matched) after all observations have been seen. For weighted abduction, assume that the cost of assuming each goal is 1 (i.e. all are equally likely).
 
 In the case of multiple observations, your code should maintain a list of all instantiated plans. Given a new observation, you can either "continue" filling in a semi-instantiated plan (if the match succeeds), or you can instantiate a new plan from the plan library (even if this is another copy of a plan which was already instantiated).
 
@@ -99,11 +99,56 @@ For this project, you may additionally use the `pytrips` library, which provides
 
 ### Part 1
 
-Implement the functionality described above in the function `recognize_intent`, defined in `code.py`. This function should take as input a list of observations (each observation is a tuple of strings representing words), and output a set of goals/intents (each goal is a tuple of strings representing ontology types, variables, or words).
+Implement the functionality described above in the function `recognize_intent`, defined in `code.py`. This function should take as input a list of observations (each observation is a tuple of strings representing words), and output a list of goals/intents (each goal is a tuple of strings representing ontology types, variables, or words).
+
+#### More Implementation Details
+
+To implement the function `recognize_intent`, please follow the details below.
+
+Your function should be finding the *most general* lowest-cost solution. If you have three possible conclusions (where a conclusion is either
+an assumed intent, or a conjunction of assumed intents) which all have the same cost, and this cost is also the lowest cost, your function should return a disjunction of conclusions.
+
+For the return value, please use the following format:
+
+- the return value should be a list of lists.
+- the outer list is to be interpreted as a disjunction.
+- the inner lists are to be interpreted as conjunctions.
+
+For example, if your singular lower-cost solution is `(ONT::STEAL partner store)`, then your function should return 
+```
+[[('ONT::STEAL', 'partner', 'store')]]
+```
+
+If your lowest-cost solutions are `(ONT::STEAL friend airport),(ONT::DEPART friend ?y:ONT::COUNTRY)`,
+
+i.e. meaning the same as `(ONT::STEAL friend airport) v (ONT::DEPART friend ?y:ONT::COUNTRY)`, 
+
+then your function should return
+```
+[[('ONT::STEAL', 'friend', 'airport')], [('ONT::DEPART', 'friend', '?y:ONT::COUNTRY')]]
+```
+
+If your lowest-cost solutions are
+
+`((ONT::STEAL person airport) (ONT::BECOME person ?w:ONT::PROFESSIONAL)), ((ONT::DEPART person ?y:ONT::COUNTRY) (ONT::BECOME person ?w:ONT::PROFESSIONAL))`, 
+
+i.e. meaning the same as
+
+`((ONT::STEAL person airport) & (ONT::BECOME person ?w:ONT::PROFESSIONAL)) v ((ONT::DEPART person ?y:ONT::COUNTRY) & (ONT::BECOME person ?w:ONT::PROFESSIONAL))`, 
+
+then your function should return
+```
+[[('ONT::STEAL', 'person', 'airport'), ('ONT::BECOME', 'person', '?w:ONT::PROFESSIONAL')],
+[('ONT::DEPART', 'person', '?y:ONT::COUNTRY'), ('ONT::BECOME', 'person', '?w:ONT::PROFESSIONAL')]]
+```
+
+For backwards compatibility before this clarification was released, a single flat list of tuples will be interpreted as a disjunction.
+
+#### Testing
 
 Feel free to define any additional functions you need in `code.py`, but *do not* create any additional Python files outside of that one.
 
-We've provided a list of example inputs in `input/observations_test.txt`, and the corresponding "gold" outputs in `output/intents_test.txt`. Each line in the input specifies a comma-separated list of observations (in the order they occur), and each line in the output specifies a comma-separated set of goals/intents predicted after those respective observations. An action library is provided for these test examples in `input/plan_libraries/plan_library_test.json`.
+We've provided a list of example inputs in `input/observations_test.txt`, and the corresponding "gold" outputs in `output/intents_test.txt`. Each line in the input specifies a comma-separated list of observations (in the order they occur). The output uses the CSV format indicated above (i.e. the one where commas represent disjunctions and spaces between tuples represent conjunctions). An action library is provided for these test examples in `input/plan_libraries/plan_library_test.json`.
 
 To test your code, run `python3 test.py` from the root directory.
 
@@ -114,44 +159,6 @@ Provide **three** of your own examples (expanding the plan library as necessary 
 Create any new plans in `input/plan_libraries/plan_library_custom.json`, and write your three example inputs in `input/observations_custom.txt`, and the expected outputs in `output/intents_custom.txt`. Make sure the format is the same as in the examples that are given to you.
 
 NOTE: the [Trips web interface](https://www.cs.rochester.edu/research/trips/lexicon/browse-ont-lex-ajax.html) might be useful for creating the examples.
-
-## Implementation Details
-
-To implement the function `recognize_intent`, please follow the details below.
-
-- the output structure of recognize_intent() is always one nested list
-- each inner list represents a set of goal(s)
-- the outer list represents all possible set(s) of goal(s)
-- comma inside an inner list indicates an intersection
-- comma outside an inner list indicates a disjunction
-
-For example, if your best conclusion is `(ONT::STEAL partner store)`, then your function should return 
-```
-[[('ONT::STEAL', 'partner', 'store')]]
-```
-
-If your best conclusion is `(ONT::STEAL friend airport),(ONT::DEPART friend ?y:ONT::COUNTRY)`,
-
-meainng `(ONT::STEAL friend airport) v (ONT::DEPART friend ?y:ONT::COUNTRY)`, 
-
-then your function should return
-```
-[[('ONT::STEAL', 'friend', 'airport')], [('ONT::DEPART', 'friend', '?y:ONT::COUNTRY')]]
-```
-
-If your best conclusion is 
-
-`((ONT::STEAL person airport) (ONT::BECOME person ?w:ONT::PROFESSIONAL)), ((ONT::DEPART person ?y:ONT::COUNTRY) (ONT::BECOME person ?w:ONT::PROFESSIONAL))`, 
-
-equivalent to 
-
-`((ONT::STEAL person airport) & (ONT::BECOME person ?w:ONT::PROFESSIONAL)) v ((ONT::DEPART person ?y:ONT::COUNTRY) & (ONT::BECOME person ?w:ONT::PROFESSIONAL))`, 
-
-then your function should return
-```
-[[('ONT::STEAL', 'person', 'airport'), ('ONT::BECOME', 'person', '?w:ONT::PROFESSIONAL')],
-[('ONT::DEPART', 'person', '?y:ONT::COUNTRY'), ('ONT::BECOME', 'person', '?w:ONT::PROFESSIONAL')]]
-```
 
 ## Submission
 
