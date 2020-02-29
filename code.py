@@ -18,8 +18,7 @@ def recognize_intent(observations):
   plan_library = read_plan_library() # Read plan library from files in input/plan_libraries
 
   # TODO: IMPLEMENT FUNCTION HERE
-  # return [None]
-  return [[('ONT::BECOME', 'pharmacist', '?w:PROFESSIONAL'), ('ONT::STEAL', 'pharmacist', 'hospital')]]
+  return [None]
 
 
 def parse_tuple_string(str):
