@@ -47,10 +47,18 @@ def lower_all(lst):
   """Converts all items in a nested list to lowercase"""
   if isinstance(lst, list):
     return list(map(lower_all, lst))
-  if isinstance(lst, tuple):
+  elif isinstance(lst, tuple):
     return tuple(map(lower_all, lst))
-  else:
+  elif lst:
     return lst.lower()
+
+
+def sort_nested(lst):
+  """Sorts test answers and gold answers in both the inner and outer lists"""
+  lst1 = [None]
+  if lst and all(isinstance(l, list) for l in lst):
+    lst1 = sorted(list(map(sorted, lst)))
+  return lst1
 
 
 def run_tests(inputs, ans_test, ans_gold):
@@ -58,6 +66,7 @@ def run_tests(inputs, ans_test, ans_gold):
   n = 0
   m = 1
   for (i, t, g) in zip(inputs, ans_test, ans_gold):
+    t, g = sort_nested(t), sort_nested(g)
     if t == g:
       s = 'SUCCESS'
       n = n+1
