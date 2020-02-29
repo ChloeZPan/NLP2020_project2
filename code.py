@@ -23,7 +23,7 @@ def recognize_intent(observations):
 
 def parse_tuple_string(str):
   """Parses a string representing a tuple into a tuple of strings."""
-  strs = str.strip('(').strip(')').split()
+  strs = str.strip().strip('(').strip(')').split()
   return (strs[0].lower(), strs[1].lower(), strs[2].lower())
 
 
