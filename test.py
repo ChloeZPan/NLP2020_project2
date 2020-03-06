@@ -5,6 +5,7 @@ It should run with the following command `python3 test.py` from the *root direct
 
 import csv
 import re
+from inspect import signature
 from code import *
 
 input_dir = 'input/'
@@ -77,18 +78,23 @@ def run_tests(inputs, ans_test, ans_gold):
   print('NUMBER CORRECT: %s / %s\n' % (n, len(ans_gold)))
 
 
-def test_recognize_intent():
+def test_recognize_intent(observation_file, intents_file, plan_library):
   """Test 'recognize_intent' function"""
-  in_raw = read_observations(input_dir + 'observations_test.txt') + read_observations(input_dir + 'observations_custom.txt')
-  out_raw = read_intents(output_dir + 'intents_test.txt') + read_intents(output_dir + 'intents_custom.txt')
-  ans_test = lower_all(correct_flat_list([recognize_intent(x) for x in in_raw]))
+  in_raw = read_observations(observation_file)
+  out_raw = read_intents(intents_file)
+  new_version = len(signature(recognize_intent).parameters) == 2
+  if new_version:
+    ans_test = lower_all(correct_flat_list([recognize_intent(x, plan_library) for x in in_raw]))
+  else:
+    ans_test = lower_all(correct_flat_list([recognize_intent(x) for x in in_raw]))
   ans_gold = out_raw
-  print('\n\nTesting function \'recognize_intent\':')
+  print('\n\nTesting function \'recognize_intent\' (%s):' % plan_library)
   run_tests(in_raw, ans_test, ans_gold)
 
 
 def main():
-  test_recognize_intent()
+  test_recognize_intent(input_dir+'observations_test.txt', output_dir+'intents_test.txt', 'test')
+  test_recognize_intent(input_dir+'observations_custom.txt', output_dir+'intents_custom.txt', 'custom')
   
 
 if __name__== "__main__":

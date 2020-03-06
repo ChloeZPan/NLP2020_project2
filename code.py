@@ -10,12 +10,13 @@ package in the Python standard library.
 Feel free to write any additional functions you need in this file, but DO NOT create any new Python files.
 """
 
-def recognize_intent(observations):
+def recognize_intent(observations, plan_library='both'):
   """Takes observations as input: this is a list of tuples of the form (word1, word2, word3), where each
      tuple represents an observation (listed in order of occurrence). Return a list of lists (interpreted as
-     described in the guidelines), e.g. [[('ONT::STEAL', 'partner', 'store'), ('ONT::TARGET_PRACTICE', 'person', 'gun')]]"""
+     described in the guidelines), e.g. [[('ONT::STEAL', 'partner', 'store'), ('ONT::TARGET_PRACTICE', 'person', 'gun')]]
+     NOTE: plan_library is either 'both', 'test', or 'custom'."""
   
-  plan_library = read_plan_library() # Read plan library from files in input/plan_libraries
+  plan_library = read_plan_library(plan_library) # Read plan library from files in input/plan_libraries
 
   # TODO: IMPLEMENT FUNCTION HERE
   return [None]
@@ -35,21 +36,28 @@ def list_tuple_string(st):
   return l
 
 
-def read_plan_library():
-  """Reads in plan library from plan library files."""
+def read_plan_library(plan_library='both'):
+  """Reads in plan library from plan library files.
+     NOTE: plan_library is either 'both', 'test', or 'custom'."""
   # Define file paths to load from
-  plan_library_test = 'input/plan_libraries/plan_library_test.json'
-  plan_library_custom = 'input/plan_libraries/plan_library_custom.json'
-  plan_library = []
+  plan_library_filename_test = 'input/plan_libraries/plan_library_test.json'
+  plan_library_filename_custom = 'input/plan_libraries/plan_library_custom.json'
+  plan_library_test = []
+  plan_library_custom = []
   # Read test plan library
-  with open(plan_library_test) as f:
+  with open(plan_library_filename_test) as f:
     plans_test = json.load(f)
-    plan_library += [{'goal':parse_tuple_string(plan['goal']),
-                      'acts':list(map(parse_tuple_string, plan['acts']))} for plan in plans_test]
+    plan_library_test += [{'goal':parse_tuple_string(plan['goal']),
+                           'acts':list(map(parse_tuple_string, plan['acts']))} for plan in plans_test]
   # Read custom plan library
-  with open(plan_library_custom) as f:
+  with open(plan_library_filename_custom) as f:
     plans_custom = json.load(f)
-    plan_library += [{'goal':parse_tuple_string(plan['goal']),
-                      'acts':list(map(parse_tuple_string, plan['acts']))} for plan in plans_custom]
-  return plan_library
+    plan_library_custom += [{'goal':parse_tuple_string(plan['goal']),
+                             'acts':list(map(parse_tuple_string, plan['acts']))} for plan in plans_custom]
+  if plan_library == 'both':
+    return plan_library_test + plan_library_custom
+  elif plan_library == 'custom':
+    return plan_library_custom
+  else:
+    return plan_library_test
   
