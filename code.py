@@ -24,7 +24,7 @@ def recognize_intent(observations, plan_library='both'):
 
 def parse_tuple_string(str):
   """Parses a string representing a tuple into a tuple of strings."""
-  strs = str.strip('(').strip(')').split()
+  strs = str.strip().strip('(').strip(')').split()
   return (strs[0].lower(), strs[1].lower(), strs[2].lower())
 
 
@@ -54,6 +54,7 @@ def read_plan_library(plan_library='both'):
     plans_custom = json.load(f)
     plan_library_custom += [{'goal':parse_tuple_string(plan['goal']),
                              'acts':list(map(parse_tuple_string, plan['acts']))} for plan in plans_custom]
+  # Return custom, test, or both depending on argument
   if plan_library == 'both':
     return plan_library_test + plan_library_custom
   elif plan_library == 'custom':
